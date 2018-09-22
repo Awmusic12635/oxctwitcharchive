@@ -22,8 +22,11 @@ def download_vod(url, video_name, username):
     ydl_opts = {
         'restrictfilenames': True
     }
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+    try:
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+    except Exception:
+        print("Download error, will come back to it")
 
 
 def check_completed_download(video_name, streamer):
