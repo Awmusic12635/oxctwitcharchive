@@ -53,11 +53,14 @@ def main():
                 print("({username}): Looking at vod: {vodname}".format(username=user.name, vodname=video.title))
                 # for each video check to see if it is an OXC video
                 if 'OXC' in video.title:
-                    #if not check_completed_download(video.url):
-                    print("VOD missing, kicking off download")
-                    download_vod(video.url, video.title, user.name)
-                    #else:
-                     #   print("VOD already downloaded, skipping...")
+                    if video.status == 'recorded':
+                        #if not check_completed_download(video.url):
+                        print("VOD missing, kicking off download")
+                        download_vod(video.url, video.title, user.name)
+                        #else:
+                         #   print("VOD already downloaded, skipping...")
+                    else:
+                        print("VOD creation still in progress, will get to this later")
                 else:
                     print("Not an OXC video, skipping...")
     except Exception:
