@@ -48,7 +48,7 @@ def main():
         for user in users:
             print("Checking user: {username}".format(username=user.name))
             # now that we have the userid we can look at their videos
-            videos = client.channels.get_videos(user.id, broadcast_type='archive')
+            videos = client.channels.get_videos(user.id, broadcast_type='archive', limit=100)
             for video in videos:
                 print("({username}): Looking at vod: {vodname}".format(username=user.name, vodname=video.title))
                 # for each video check to see if it is an OXC video
