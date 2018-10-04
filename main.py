@@ -52,7 +52,7 @@ def main():
             for video in videos:
                 print("({username}): Looking at vod: {vodname}".format(username=user.name, vodname=video.title))
                 # for each video check to see if it is an OXC video
-                if 'OXC' in video.title or 'OWXC' in video.title or 'OWXL' in video.title:
+                if 'OXC' in video.title or 'OWXC' in video.title or 'OWXL' in video.title or 'CGL' in video.title:
                     if video.status == 'recorded':
                         #if not check_completed_download(video.url):
                         print("VOD missing, kicking off download")
