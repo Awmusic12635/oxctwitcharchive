@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from twitch.client import TwitchClient
 import os
 import youtube_dl
+import json
 from dotenv import load_dotenv, find_dotenv
 load_dotenv('.env')
 
@@ -12,12 +13,9 @@ BASE_DIR = os.getenv("BASE_DIR")
 CLIENT_ID = os.getenv("CLIENT_ID")
 
 
-def download_vod(url, video_name, username):
-    if os.path.isdir(BASE_DIR + username):
-        os.chdir(BASE_DIR + username)
-    else:
-        os.mkdir(BASE_DIR + username)
-        os.chdir(BASE_DIR + username)
+def download_vod(url, video_name, username, game):
+    os.mkdirs(BASE_DIR + "/" + game + "/" + username, exist_ok=True)
+    os.chdir(BASE_DIR + "/" + game + "/" + username)
 
     ydl_opts = {
         'restrictfilenames': True
@@ -37,6 +35,21 @@ def extract_metadata(vod):
     pass
 
 
+# do what is already being done in main
+def archive_league_streams():
+    pass
+
+
+# just grab all vods for a player
+def archive_player_streams(user, prefix):
+    pass
+
+
+# grab all player's vods for a team for a season
+def archive_team_streams(team):
+    pass
+
+
 def main():
     print("Streamers to check")
     print(oxc_streamer_list)
@@ -52,11 +65,11 @@ def main():
             for video in videos:
                 print("({username}): Looking at vod: {vodname}".format(username=user.name, vodname=video.title))
                 # for each video check to see if it is an OXC video
-                if 'OXC' in video.title or 'OWXC' in video.title or 'OWXL' in video.title or 'CGL' in video.title:
+                if 'OXC' in video.title or 'OWXC' in video.title or 'OWXL' in video.title or 'CGL' in video.title or user in ['cgl1', 'consolegamingleague2']:
                     if video.status == 'recorded':
                         #if not check_completed_download(video.url):
                         print("VOD missing, kicking off download")
-                        download_vod(video.url, video.title, user.name)
+                        download_vod(video.url, video.title, user.name, video.game)
                         #else:
                          #   print("VOD already downloaded, skipping...")
                     else:
